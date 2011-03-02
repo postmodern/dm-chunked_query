@@ -11,6 +11,11 @@ Allows performing chunked queries on DataMapper Models or Collections.
 
 ## Features
 
+* Allows random-access to chunks within a query.
+* Can iterate through all chunks within a query.
+* Can be used for bulk-processing of resources.
+* Can also be used for pagination of resources.
+
 ## Examples
 
 Enumerate over all chunks, 20 resources per-chunk:
@@ -23,7 +28,7 @@ Enumerate over all chunks, 20 resources per-chunk:
       end
     end
 
-Get the 5th chunk, of 10 elements:
+Get the 5th chunk, containing 10 resources:
 
     MyModel.all(:foo => 'bar').chunks(10)[5]
 
