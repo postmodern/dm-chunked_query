@@ -1,5 +1,27 @@
-gem 'rspec', '~> 2.4'
 require 'rspec'
-require 'dm/chunked_query/version'
+require 'dm-core/spec/setup'
+require 'dm-core/spec/lib/adapter_helpers'
 
-include DataMapper::ChunkedQuery
+require 'dm-chunked_query'
+
+class TestModel
+
+  include DataMapper::Resource
+
+  property :id, Serial
+
+  property :number, Integer
+
+end
+
+DataMapper::Spec.setup
+
+RSpec.configure do |config|
+  config.extend(DataMapper::Spec::Adapters::Helpers)
+
+  config.before(:suite) do
+    TestModel.auto_migrate!
+
+    (1..100).each { |i| TestModel.create(:number => i) }
+  end
+end

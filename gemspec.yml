@@ -1,11 +1,18 @@
 name: dm-chunked_query
-summary: "TODO: Summary"
-description: "TODO: Description"
+version: 0.1.0
+summary: Allows performing chunked queries with DataMapper.
+description:
+  Allows performing chunked queries on DataMapper Models or Collections.
+
 license: MIT
 authors: Postmodern
 email: postmodern.mod3@gmail.com
-homepage: http://rubygems.org/gems/dm-chunked_query
+homepage: http://github.com/postmodern/dm-chunked_query
 has_yard: true
+
+dependencies:
+  dm-core: ~> 1.0
+  dm-aggregates: ~> 1.0
 
 development_dependencies:
   ore-tasks: ~> 0.4

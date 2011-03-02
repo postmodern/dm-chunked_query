@@ -17,7 +17,13 @@ module DataMapper
         when Range
           if (key.min >= 0 && key.min < length)
             if (key.max >= 0 && key.max < length)
-              key.map { |index| chunk(index) }
+              resources = []
+
+              key.each do |index|
+                chunk(index).each { |resource| resources << resource }
+              end
+
+              resources
             end
           end
         when Integer
@@ -26,6 +32,8 @@ module DataMapper
           end
         end
       end
+
+      alias at []
 
       def each
         return enum_for(:each) unless block_given?
