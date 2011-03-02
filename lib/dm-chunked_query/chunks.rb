@@ -1,5 +1,8 @@
 module DataMapper
   module ChunkedQuery
+    #
+    # Represents the abstract collection of Chunks.
+    #
     class Chunks
 
       include Enumerable
@@ -7,11 +10,29 @@ module DataMapper
       # The number of resources per chunk
       attr_reader :per_chunk
 
+      #
+      # Creates a new collection of Chunks.
+      #
+      # @param [DataMapper::Model, DataMapper::Collection] query
+      #   The model or collection to access via chunks.
+      #
+      # @param [Integer] per_chunk
+      #   The number of records per-chunk.
+      #
       def initialize(query,per_chunk)
         @query = query
         @per_chunk = per_chunk
       end
 
+      #
+      # Provides random access to chunks.
+      #
+      # @param [Integer, Range<Integer>] key
+      #   The index or range of indices to access.
+      #
+      # @return [DataMapper::Collection, Array<DataMapper::Resource>]
+      #   A collection of resources at the given index or indices.
+      #
       def [](key)
         case key
         when Range
@@ -35,6 +56,18 @@ module DataMapper
 
       alias at []
 
+      #
+      # Enumerates over each chunk in the collection of Chunks.
+      #
+      # @yield [chunk]
+      #   The given block will be passed each chunk.
+      #
+      # @yieldparam [DataMapper::Collection] chunk
+      #   The collection of resources that makes up a chunk.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an Enumerator object will be returned.
+      #
       def each
         return enum_for(:each) unless block_given?
 
@@ -45,10 +78,22 @@ module DataMapper
         return self
       end
 
+      #
+      # Counts how many underlying resources are available.
+      #
+      # @return [Integer]
+      #   The total number of resources.
+      #
       def count
         @count ||= @query.count
       end
 
+      #
+      # Calculate the number of Chunks.
+      #
+      # @return [Integer]
+      #   The number of available Chunks.
+      #
       def length
         @length ||= (count.to_f / @per_chunk).ceil
       end
@@ -57,6 +102,15 @@ module DataMapper
 
       protected
 
+      #
+      # Creates a chunk of resources.
+      #
+      # @param [Integer] index
+      #   The index of the chunk.
+      #
+      # @return [DataMapper::Collection]
+      #   The collection of resources that makes up the chunk.
+      #
       def chunk(index)
         @query.all(
           :limit => @per_chunk,
