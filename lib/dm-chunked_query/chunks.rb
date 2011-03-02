@@ -41,6 +41,8 @@ module DataMapper
         (0...length).each do |index|
           yield chunk(index)
         end
+
+        return self
       end
 
       def count
