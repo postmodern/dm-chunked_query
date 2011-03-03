@@ -42,9 +42,9 @@ module DataMapper
 
               key.each do |index|
                 if chunks
-                  chunks |= chunk(index)
+                  chunks |= chunk_at(index)
                 else
-                  chunks = chunk(index)
+                  chunks = chunk_at(index)
                 end
               end
 
@@ -53,7 +53,7 @@ module DataMapper
           end
         when Integer
           if (key >= 0 && key < length)
-            chunk(key)
+            chunk_at(key)
           end
         end
       end
@@ -115,7 +115,7 @@ module DataMapper
       # @return [DataMapper::Collection]
       #   The collection of resources that makes up the chunk.
       #
-      def chunk(index)
+      def chunk_at(index)
         @query.all(
           :limit => @per_chunk,
           :offset => (index * @per_chunk)
