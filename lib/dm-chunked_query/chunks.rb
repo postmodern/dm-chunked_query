@@ -27,11 +27,12 @@ module DataMapper
       #
       # Provides random access to chunks.
       #
-      # @param [Integer, Range<Integer>] key
+      # @param [Range<Integer>, #to_i] key
       #   The index or range of indices to access.
       #
-      # @return [DataMapper::Collection, Array<DataMapper::Resource>]
+      # @return [DataMapper::Collection, nil]
       #   A collection of resources at the given index or indices.
+      #   If the index is out of bounds, `nil` will be returned.
       #
       def [](key)
         case key
@@ -40,12 +41,24 @@ module DataMapper
           span = key.to_a.size
 
           chunk_at(index,span)
-        when Integer
-          chunk_at(key)
+        else
+          at(index)
         end
       end
 
-      alias at []
+      #
+      # Accesses a chunk at a specific index.
+      #
+      # @param [#to_i] index
+      #   The index to access.
+      #
+      # @return [DataMapper::Collection, nil]
+      #   The chunk of resources at the given index. If the index is out of
+      #   bounds, `nil` will be returned.
+      #
+      def at(index)
+        chunk_at(key.to_i)
+      end
 
       #
       # Enumerates over each chunk in the collection of Chunks.
