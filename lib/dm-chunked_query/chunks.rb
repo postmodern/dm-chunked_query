@@ -57,7 +57,7 @@ module DataMapper
       #   bounds, `nil` will be returned.
       #
       def at(index)
-        chunk_at(key.to_i)
+        chunk_at(index.to_i)
       end
 
       #
