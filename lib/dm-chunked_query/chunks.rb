@@ -36,25 +36,12 @@ module DataMapper
       def [](key)
         case key
         when Range
-          if (key.min >= 0 && key.min < length)
-            if (key.max >= 0 && key.max < length)
-              chunks = nil
+          index = key.first
+          span = key.to_a.size
 
-              key.each do |index|
-                if chunks
-                  chunks |= chunk_at(index)
-                else
-                  chunks = chunk_at(index)
-                end
-              end
-
-              chunks
-            end
-          end
+          chunk_at(index,span)
         when Integer
-          if (key >= 0 && key < length)
-            chunk_at(key)
-          end
+          chunk_at(key)
         end
       end
 
@@ -76,7 +63,7 @@ module DataMapper
         return enum_for(:each) unless block_given?
 
         (0...length).each do |index|
-          yield chunk(index)
+          yield chunk_at(index)
         end
 
         return self
@@ -112,14 +99,16 @@ module DataMapper
       # @param [Integer] index
       #   The index of the chunk.
       #
+      # @param [Integer] span
+      #   The number of chunks the chunk should span.
+      #
       # @return [DataMapper::Collection]
       #   The collection of resources that makes up the chunk.
       #
-      def chunk_at(index)
-        @query.all(
-          :limit => @per_chunk,
-          :offset => (index * @per_chunk)
-        )
+      def chunk_at(index,span=1)
+        if (index >= 0 && index < length)
+          @query[(index * @per_chunk), (span * @per_chunk)]
+        end
       end
 
     end
