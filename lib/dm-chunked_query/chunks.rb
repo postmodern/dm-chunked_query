@@ -27,7 +27,7 @@ module DataMapper
       #
       # Provides random access to chunks.
       #
-      # @param [Range<Integer>, #to_i] key
+      # @param [Range<Integer>, Integer] key
       #   The index or range of indices to access.
       #
       # @return [DataMapper::Collection, nil]
@@ -41,8 +41,8 @@ module DataMapper
           span = key.to_a.size
 
           chunk_at(index,span)
-        else
-          at(index)
+        when Integer
+          chunk_at(index)
         end
       end
 
