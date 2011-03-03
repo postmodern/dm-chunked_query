@@ -38,13 +38,17 @@ module DataMapper
         when Range
           if (key.min >= 0 && key.min < length)
             if (key.max >= 0 && key.max < length)
-              resources = []
+              chunks = nil
 
               key.each do |index|
-                chunk(index).each { |resource| resources << resource }
+                if chunks
+                  chunks |= chunk(index)
+                else
+                  chunks = chunk(index)
+                end
               end
 
-              resources
+              chunks
             end
           end
         when Integer
