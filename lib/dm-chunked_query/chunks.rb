@@ -42,7 +42,7 @@ module DataMapper
 
           chunk_at(index,span)
         when Integer
-          chunk_at(index)
+          chunk_at(key)
         end
       end
 
