@@ -75,7 +75,7 @@ module DataMapper
       def each
         return enum_for(:each) unless block_given?
 
-        (0...length).each do |index|
+        length.times do |index|
           yield chunk_at(index)
         end
 
