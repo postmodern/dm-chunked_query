@@ -30,9 +30,8 @@ module DataMapper
       # @param [Range<Integer>, Integer] key
       #   The index or range of indices to access.
       #
-      # @return [DataMapper::Collection, nil]
+      # @return [DataMapper::Collection]
       #   A collection of resources at the given index or indices.
-      #   If the index is out of bounds, `nil` will be returned.
       #
       def [](key)
         case key
@@ -52,12 +51,33 @@ module DataMapper
       # @param [#to_i] index
       #   The index to access.
       #
-      # @return [DataMapper::Collection, nil]
-      #   The chunk of resources at the given index. If the index is out of
-      #   bounds, `nil` will be returned.
+      # @return [DataMapper::Collection]
+      #   The chunk of resources at the given index.
       #
       def at(index)
         chunk_at(index.to_i)
+      end
+
+      #
+      # Returns the first chunk(s).
+      #
+      # @param [Integer] n
+      #   The number of sub-chunks to include.
+      #
+      # @return [DataMapper::Collection]
+      #   The first chunk of resources.
+      #
+      # @raise [ArgumentError]
+      #   The number of sub-chunks was negative.
+      #
+      # @since 0.1.3
+      #
+      def first(n=1)
+        if n >= 0
+          chunk_at(0,n)
+        else
+          raise(ArgumentError,"negative array size")
+        end
       end
 
       #
@@ -119,9 +139,7 @@ module DataMapper
       #   The collection of resources that makes up the chunk.
       #
       def chunk_at(index,span=1)
-        if (index >= 0 && index < length)
-          @query[(index * @per_chunk), (span * @per_chunk)]
-        end
+        @query[(index * @per_chunk), (span * @per_chunk)]
       end
 
     end

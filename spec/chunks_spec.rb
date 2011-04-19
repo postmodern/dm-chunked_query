@@ -51,6 +51,26 @@ describe DataMapper::ChunkedQuery::Chunks do
     end
   end
 
+  describe "#first" do
+    it "should return the first chunk by default" do
+      resources = subject.first
+      numbers = resources.map { |resource| resource.number }
+
+      numbers.should == (1..10).to_a
+    end
+
+    it "should return multiple chunks when n > 1" do
+      resources = subject.first(2)
+      numbers = resources.map { |resource| resource.number }
+
+      numbers.should == (1..20).to_a
+    end
+
+    it "should return an empty collection when n=0" do
+      subject.first(0).should be_empty
+    end
+  end
+
   it "should allow enumerating through every chunk" do
     resources = []
     subject.each { |chunk| resources += chunk }
