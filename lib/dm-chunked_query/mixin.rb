@@ -16,7 +16,12 @@ module DataMapper
         Chunks.new(self,per_chunk)
       end
 
-      alias chunks_of chunks
+      #
+      # @see chunks
+      #
+      def chunks_of(per_chunk)
+        chunks(per_chunk)
+      end
 
       #
       # Enumerate over every chunk.
