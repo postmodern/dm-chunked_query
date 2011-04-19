@@ -70,7 +70,7 @@ module DataMapper
       # @raise [ArgumentError]
       #   The number of sub-chunks was negative.
       #
-      # @since 0.1.3
+      # @since 0.2.0
       #
       def first(n=1)
         if n >= 0
