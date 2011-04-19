@@ -24,7 +24,7 @@ module DataMapper
       # @param [Integer] per_chunk
       #   The number of resources per-chunk.
       #
-      # @yeild [chunk]
+      # @yield [chunk]
       #   A chunk of resources within the query.
       #
       # @yieldparam [DataMapper::Collection] chunk
