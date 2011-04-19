@@ -1,3 +1,8 @@
+### 0.2.0 / 2011-04-19
+
+* Added {DataMapper::ChunkedQuery::Chunks#first}.
+* Added {DataMapper::ChunkedQuery::Mixin#each_chunk}.
+
 ### 0.1.2 / 2011-03-03
 
 * Fixed a typo in {DataMapper::ChunkedQuery::Chunks#[]}.
