@@ -41,7 +41,7 @@ module DataMapper
       # @since 0.2.0
       #
       def each_chunk(per_chunk,&block)
-        chunks.each(&block)
+        chunks(per_chunk).each(&block)
       end
     end
   end
