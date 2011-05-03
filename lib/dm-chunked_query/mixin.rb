@@ -17,7 +17,7 @@ module DataMapper
       end
 
       #
-      # @see chunks
+      # @see #chunks
       #
       def chunks_of(per_chunk)
         chunks(per_chunk)
@@ -37,6 +37,8 @@ module DataMapper
       #
       # @return [Chunks]
       #   The abstract collection of chunks from the query.
+      #
+      # @see #chunks
       #
       # @since 0.2.0
       #
