@@ -54,6 +54,30 @@ module DataMapper
       def each_slice(per_chunk,&block)
         each_chunk(per_chunk,&block)
       end
+
+      #
+      # Reads in records in batches and processes them.
+      #
+      # @param [Integer] per_batch
+      #   The number of resources per-batch.
+      #
+      # @yield [resource]
+      #   The given block will be passed each resource from each batch
+      #   of resources.
+      #
+      # @yieldparam [DataMapper::Resource] resource
+      #   A resource from the batch.
+      #
+      # @return [Chunks]
+      #   The abstract collection of chunks from the query.
+      #
+      # @see #each_chunk
+      #
+      # @since 0.3.0
+      #
+      def batch(per_batch,&block)
+        each_chunk(per_batch) { |chunk| chunk.each(&block) }
+      end
     end
   end
 end
