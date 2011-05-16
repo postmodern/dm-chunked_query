@@ -1,3 +1,9 @@
+### 0.3.0 / 2011-05-16
+
+* Added {DataMapper::ChunkedQuery::Mixin#each_slice} which calls
+  {DataMapper::ChunkedQuery::Mixin#each_chunk}.
+* Added {DataMapper::ChunkedQuery::Mixin#batch}.
+
 ### 0.2.1 / 2011-05-02
 
 * Fixed a typo in {DataMapper::ChunkedQuery::Mixin#each_chunk}.
