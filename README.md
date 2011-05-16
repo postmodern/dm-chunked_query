@@ -32,6 +32,12 @@ Get the 5th chunk, containing 10 resources:
 
     MyModel.all(:foo => 'bar').chunks(10)[5]
 
+Process records in batches:
+
+    MyModel.batch(100) do |resource|
+      # ...
+    end
+
 ## Requirements
 
 * [dm-core](http://github.com/datamapper/dm-core#readme) ~> 1.0
