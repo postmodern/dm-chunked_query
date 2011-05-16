@@ -45,6 +45,13 @@ module DataMapper
       def each_chunk(per_chunk,&block)
         chunks(per_chunk).each(&block)
       end
+
+      #
+      # @see each_chunk
+      #
+      def each_slice(per_chunk,&block)
+        each_chunk(per_chunk,&block)
+      end
     end
   end
 end
