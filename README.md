@@ -22,7 +22,7 @@ Enumerate over all chunks, 20 resources per-chunk:
 
     require 'dm-chunked_query'
 
-    MyModel.each_chunk(20).each do |chunk|
+    MyModel.each_chunk(20) do |chunk|
       chunk.each do |resource|
         # ...
       end
