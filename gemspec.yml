@@ -1,5 +1,5 @@
 name: dm-chunked_query
-version: 0.3.0
+version: 0.3.1
 summary: Allows performing chunked queries with DataMapper.
 description:
   Allows performing chunked queries on DataMapper Models or Collections.
