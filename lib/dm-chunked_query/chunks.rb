@@ -19,9 +19,19 @@ module DataMapper
       # @param [Integer] per_chunk
       #   The number of records per-chunk.
       #
-      def initialize(query,per_chunk)
+      def initialize(query, per_chunk)
         @query = query
         @per_chunk = per_chunk
+
+        if key = query.key and (key.size != 1 || !key.respond_to?(:max))
+          raise "Your model must have a single primary key which is a DataMapper::Property::Serial object."
+        end
+
+        if order = query.query.order and direction = order.first
+          if order.size != 1 || direction.operator != :asc || direction.target != query.key.first
+            raise "You can't specify the order, it's forced to be #{batch_order.order}"
+          end
+        end
       end
 
       #
@@ -35,13 +45,13 @@ module DataMapper
       #
       def [](key)
         case key
-        when Range
-          index = key.first
-          span = key.to_a.size
+          when Range
+            index = key.first
+            span = key.to_a.size
 
-          chunk_at(index,span)
-        when Integer
-          chunk_at(key)
+            chunk_at(index, span)
+          when Integer
+            chunk_at(key)
         end
       end
 
@@ -74,9 +84,9 @@ module DataMapper
       #
       def first(n=1)
         if n >= 0
-          chunk_at(0,n)
+          chunk_at(0, n)
         else
-          raise(ArgumentError,"negative array size")
+          raise(ArgumentError, "negative array size")
         end
       end
 
@@ -138,8 +148,12 @@ module DataMapper
       # @return [DataMapper::Collection]
       #   The collection of resources that makes up the chunk.
       #
-      def chunk_at(index,span=1)
-        @query[(index * @per_chunk), (span * @per_chunk)]
+      def chunk_at(index, span=1)
+        @query.all(batch_order)[(index * @per_chunk), (span * @per_chunk)]
+      end
+
+      def batch_order
+        @query.all(:order => @query.key).query
       end
 
     end
