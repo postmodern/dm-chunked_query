@@ -83,7 +83,7 @@
 source :rubygems
 
 DATAMAPPER = 'http://github.com/datamapper'
-DM_VERSION = '~> 1.0'
+DM_VERSION = '~> 1.1'
 DO_VERSION = '~> 0.10.2'
 DM_DO_ADAPTERS = %w[sqlite postgres mysql oracle sqlserver]
 RAILS = 'http://github.com/rails/rails.git'
