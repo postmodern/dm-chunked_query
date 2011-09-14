@@ -97,6 +97,7 @@ else
 end
 
 gem 'dm-core',	DM_VERSION
+gem 'dm-aggregates',	DM_VERSION
 
 group :development do
   gem 'rake',		    '~> 0.8.7'
