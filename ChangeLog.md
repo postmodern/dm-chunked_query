@@ -1,5 +1,13 @@
 ### 0.3.0 / 2011-05-16
 
+* Changed implementation of {DataMapper::ChunkedQuery::Chunks#each} to use the same sql queries as active record
+  find_each.
+* Removed {DataMapper::ChunkedQuery::Chunks#[]}, {DataMapper::ChunkedQuery::Chunks#at} and
+  {DataMapper::ChunkedQuery::Chunks#first}, because they can't be realized with the new
+  {DataMapper::ChunkedQuery::Chunks#each} implementation.
+
+### 0.3.0 / 2011-05-16
+
 * Added {DataMapper::ChunkedQuery::Mixin#each_slice} which calls
   {DataMapper::ChunkedQuery::Mixin#each_chunk}.
 * Added {DataMapper::ChunkedQuery::Mixin#batch}.

@@ -83,7 +83,7 @@
 source :rubygems
 
 DATAMAPPER = 'http://github.com/datamapper'
-DM_VERSION = '~> 1.0'
+DM_VERSION = '~> 1.1'
 DO_VERSION = '~> 0.10.2'
 DM_DO_ADAPTERS = %w[sqlite postgres mysql oracle sqlserver]
 RAILS = 'http://github.com/rails/rails.git'
@@ -96,7 +96,8 @@ else
   gem 'i18n',           '~> 0.5.0'
 end
 
-gem 'dm-core',	DM_VERSION, :git => "#{DATAMAPPER}/dm-core.git"
+gem 'dm-core',	DM_VERSION
+gem 'dm-aggregates',	DM_VERSION
 
 group :development do
   gem 'rake',		    '~> 0.8.7'
@@ -126,17 +127,17 @@ group :datamapper do
       gem "do_#{adapter}", DO_VERSION, options.dup
     end
 
-    gem 'dm-do-adapter', DM_VERSION, :git => "#{DATAMAPPER}/dm-do-adapter.git"
+    gem 'dm-do-adapter', DM_VERSION
   end
 
   adapters.each do |adapter|
-    gem "dm-#{adapter}-adapter", DM_VERSION, :git => "#{DATAMAPPER}/dm-#{adapter}-adapter.git"
+    gem "dm-#{adapter}-adapter", DM_VERSION
   end
 
   plugins = ENV['PLUGINS'] || ENV['PLUGIN']
   plugins = plugins.to_s.tr(',', ' ').split.push('dm-migrations').uniq
 
   plugins.each do |plugin|
-    gem plugin, DM_VERSION, :git => "#{DATAMAPPER}/#{plugin}.git"
+    gem plugin, DM_VERSION
   end
 end

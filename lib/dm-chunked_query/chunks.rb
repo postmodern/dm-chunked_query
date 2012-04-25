@@ -19,64 +19,18 @@ module DataMapper
       # @param [Integer] per_chunk
       #   The number of records per-chunk.
       #
-      def initialize(query,per_chunk)
+      def initialize(query, per_chunk)
         @query = query
         @per_chunk = per_chunk
-      end
 
-      #
-      # Provides random access to chunks.
-      #
-      # @param [Range<Integer>, Integer] key
-      #   The index or range of indices to access.
-      #
-      # @return [DataMapper::Collection]
-      #   A collection of resources at the given index or indices.
-      #
-      def [](key)
-        case key
-        when Range
-          index = key.first
-          span = key.to_a.size
-
-          chunk_at(index,span)
-        when Integer
-          chunk_at(key)
+        if key = query.key and (key.size != 1 || !key.respond_to?(:max))
+          raise "Your model must have a single primary key which is a DataMapper::Property::Serial object."
         end
-      end
 
-      #
-      # Accesses a chunk at a specific index.
-      #
-      # @param [#to_i] index
-      #   The index to access.
-      #
-      # @return [DataMapper::Collection]
-      #   The chunk of resources at the given index.
-      #
-      def at(index)
-        chunk_at(index.to_i)
-      end
-
-      #
-      # Returns the first chunk(s).
-      #
-      # @param [Integer] n
-      #   The number of sub-chunks to include.
-      #
-      # @return [DataMapper::Collection]
-      #   The first chunk of resources.
-      #
-      # @raise [ArgumentError]
-      #   The number of sub-chunks was negative.
-      #
-      # @since 0.2.0
-      #
-      def first(n=1)
-        if n >= 0
-          chunk_at(0,n)
-        else
-          raise(ArgumentError,"negative array size")
+        if order = query.query.order and direction = order.first
+          if order.size != 1 || direction.operator != :asc || direction.target != query.key.first
+            raise "You can't specify the order, it's forced to be #{batch_order.order}"
+          end
         end
       end
 
@@ -95,8 +49,19 @@ module DataMapper
       def each
         return enum_for(:each) unless block_given?
 
-        length.times do |index|
-          yield chunk_at(index)
+        relation = @query.all(batch_order).all(:limit => @per_chunk)
+        records = relation.all(primary_key.name.gte => 0)
+
+        while records.any?
+          yield records
+
+          break if records.size < @per_chunk
+
+          if primary_key_offset = records.last.key.first
+            records = relation.all(primary_key.name.gt => primary_key_offset)
+          else
+            raise "Primary key not included in the custom select clause"
+          end
         end
 
         return self
@@ -126,20 +91,12 @@ module DataMapper
 
       protected
 
-      #
-      # Creates a chunk of resources.
-      #
-      # @param [Integer] index
-      #   The index of the chunk.
-      #
-      # @param [Integer] span
-      #   The number of chunks the chunk should span.
-      #
-      # @return [DataMapper::Collection]
-      #   The collection of resources that makes up the chunk.
-      #
-      def chunk_at(index,span=1)
-        @query[(index * @per_chunk), (span * @per_chunk)]
+      def batch_order
+        @query.all(:order => @query.key).query
+      end
+
+      def primary_key
+        @query.key.first
       end
 
     end
