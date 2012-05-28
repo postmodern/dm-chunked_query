@@ -104,8 +104,8 @@ group :development do
   gem 'rubygems-tasks',	'~> 0.1'
   gem 'rspec',          '~> 2.4'
 
-  gem 'kramdown',   '~> 0.12.0'
-  gem 'yard',		    '~> 0.6.0'
+  gem 'kramdown',   '~> 0.12'
+  gem 'yard',		    '~> 0.7'
 end
 
 group :datamapper do
