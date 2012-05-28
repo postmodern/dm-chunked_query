@@ -17,7 +17,7 @@ Gem::Specification.new do |gemspec|
   }
 
   version = {
-    :file     => 'dm/chunked_query/version',
+    :file     => 'dm-chunked_query/version',
     :constant => 'DataMapper::ChunkedQuery::VERSION'
   }
 
