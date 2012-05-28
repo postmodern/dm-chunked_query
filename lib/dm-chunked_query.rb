@@ -1,4 +1,5 @@
 require 'dm-chunked_query/mixin'
+require 'dm-chunked_query/version'
 
 require 'dm-core'
 
