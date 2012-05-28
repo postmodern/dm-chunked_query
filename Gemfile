@@ -99,7 +99,7 @@ end
 gem 'dm-core',	DM_VERSION, :git => "#{DATAMAPPER}/dm-core.git"
 
 group :development do
-  gem 'rake',		    '~> 0.8.7'
+  gem 'rake',		    '~> 0.8'
 
   gem 'rubygems-tasks',	'~> 0.1'
   gem 'rspec',          '~> 2.4'
