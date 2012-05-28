@@ -7,7 +7,7 @@ description:
 license: MIT
 authors: Postmodern
 email: postmodern.mod3@gmail.com
-homepage: https://github.com/postmodern/dm-chunked_query
+homepage: https://github.com/postmodern/dm-chunked_query#readme
 has_yard: true
 
 dependencies:
