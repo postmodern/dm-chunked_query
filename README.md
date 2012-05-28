@@ -1,7 +1,7 @@
 # dm-chunked_query
 
-* [Source](http://github.com/postmodern/dm-chunked_query)
-* [Issues](http://github.com/postmodern/dm-chunked_query/issues)
+* [Source](https://github.com/postmodern/dm-chunked_query)
+* [Issues](https://github.com/postmodern/dm-chunked_query/issues)
 * [Documentation](http://rubydoc.info/gems/dm-chunked_query/frames)
 * [Email](mailto:postmodern.mod3 at gmail.com)
 
@@ -40,8 +40,8 @@ Process records in batches:
 
 ## Requirements
 
-* [dm-core](http://github.com/datamapper/dm-core#readme) ~> 1.0
-* [dm-aggregates](http://github.com/datamapper/dm-aggregates#readme) ~> 1.0
+* [dm-core](https://github.com/datamapper/dm-core#readme) ~> 1.0
+* [dm-aggregates](https://github.com/datamapper/dm-aggregates#readme) ~> 1.0
 
 ## Install
 
