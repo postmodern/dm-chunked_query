@@ -1,3 +1,10 @@
+### 0.3.1 / 2012-05-27
+
+* Added {DataMapper::ChunkedQuery::VERSION}.
+* Replaced ore-tasks with
+  [rubygems-tasks](https://github.com/postmodern/rubygems-tasks#readme).
+* Replaced the development dependencies with bunlder ~> 1.0 and yard ~> 0.7.
+
 ### 0.3.0 / 2011-05-16
 
 * Added {DataMapper::ChunkedQuery::Mixin#each_slice} which calls
